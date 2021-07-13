@@ -76,6 +76,7 @@ post formatting. [Current includes](#includes).
 ### Article Structure
 
 Look at the example in the `_drafts` directory to get an idea of the structure.
+[Example Article](https://raw.githubusercontent.com/cedadev/dev-blog/gh-pages/_drafts/example_blog_post.md)
 
 ### Article assets (images and such)
 
