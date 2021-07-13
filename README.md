@@ -77,7 +77,7 @@ post formatting. [Current includes](#includes).
 
 Look at the example in the `_drafts` directory to get an idea of the structure.
 
-### Article assets
+### Article assets (images and such)
 
 It is likely that you'll want to add images. Add your images to the `assets` directory.
 Assets should be organised following the `_posts` structure. For example:
