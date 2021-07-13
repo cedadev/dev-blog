@@ -96,6 +96,7 @@ dev-blog/
 ```
 
 Images can be directly linked to using the normal markdown image link syntax:
+
 `![amazing](/assets/img/data_management/2021-07-09-data/amazing_img.png)`
 
 For convenience, I have added a figure template. To add an image with a caption.
