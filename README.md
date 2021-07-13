@@ -36,7 +36,7 @@ to the `gh-pages` branch. Github then builds the blog and publishes it.
 3. `git checkout gh-pages`
 4. `git checkout -b article/<article-bramch-name>`
 5. Copy the example article in the `_drafts` directory
-6. Start writing
+6. [Start writing](#writing-an-article)
 
 If you want to be able to see the effect of you edits in real time, you'll want to 
 look at [installing jekyll](#getting-started-with-jekyll). As articles are written
