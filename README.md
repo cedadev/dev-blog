@@ -5,7 +5,7 @@ Blog to publish informal and technical articles about activities at CEDA.
 Contents:
 - [Orientation](#orientation)
 - [Quickstart](#quickstart)
-- [Getting started with Jekyll](#Getting started with Jekyll)
+- [Getting started with Jekyll](#getting-started-with-jekyll)
 - [Writing and article](#writing-an-article)
 - [Useful resources](#useful-resources)
 
