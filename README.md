@@ -32,6 +32,10 @@ to the `gh-pages` branch. Github then builds the blog and publishes it.
 
 ## Quickstart
 
+Can be done in one of two ways:
+- [Locally](#setup-environment-on-your-laptop)
+- [On GitHub](#using-github-to-write-your-articles)
+
 ### Setup environment on your laptop
 
 1. `git clone https://github.com/cedadev/dev-blog`
