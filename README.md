@@ -152,6 +152,13 @@ tag.
 {% post_url 2010-07-21-name-of-post %}
 ```
 
+### Author Bio
+
+When you set the author at the top of your post, the template will try to find a matching
+bio in [_data/authors.yaml](https://github.com/cedadev/dev-blog/blob/gh-pages/_data/authors.yaml).
+
+Add your name to get it picked up. I used the image url and bio from [ceda.ac.uk](ceda.ac.uk)
+
 ## Includes
 
 | Name | Description |
