@@ -8,6 +8,7 @@ Contents:
 - [Branch naming convention](#branch-naming-convention)
 - [Getting started with Jekyll](#getting-started-with-jekyll)
 - [Writing and article](#writing-an-article)
+- [Template includes](#includes)
 - [Useful resources](#useful-resources)
 
 ## Orientation
@@ -82,6 +83,11 @@ The jekyll documentation gives a [quick start guide](https://jekyllrb.com/docs/#
 to provide local server which you can use when developing your articles.
 
 ## Writing an article
+
+- [Article structure](#article-structure)
+- [Adding images](#article-assets-images-and-such)
+- [Linking other posts](#linking-to-other-posts)
+- [Adding author bio](#author-bio)
 
 You should follow good git practice and develop your articles on a branch. Merging to `gh-pages` is 
 protected and requires 1 approving review from senior management, just as a final check. Please use
