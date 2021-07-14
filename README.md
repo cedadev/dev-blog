@@ -171,6 +171,9 @@ Add your name to get it picked up. I used the image url and bio from [ceda.ac.uk
 
 ## Includes
 
+Includes are small template snippets which can be used to provide consistent results and 
+reduce repetition when creating common elements. The available includes are below.
+
 | Name | Description |
 |------|-------------|
 | [Figure](#figure) | Insert a figure into your article with a caption aligned centre underneath | 
