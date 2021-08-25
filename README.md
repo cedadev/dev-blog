@@ -177,7 +177,8 @@ reduce repetition when creating common elements. The available includes are belo
 | Name | Description |
 |------|-------------|
 | [Figure](#figure) | Insert a figure into your article with a caption aligned centre underneath | 
-| [Caption](#caption) | Standalone template to add a caption |
+| [Caption](#caption) | Standalone template to add a caption /
+/ [MathJax](#mathjax) / Allow support for Mathmatical formula renderer [Mathjax](https://www.mathjax.org/)
 
 
 ### Figure
@@ -194,6 +195,20 @@ Defaults to be 50% of article width.
 | image_url | `required` URL to the image, can be an asset or external link |
 | description | `required` Caption to be placed under image |
 | image_style | modifies the style for the image. default: `width: 50%; margin-left: auto; margin-right: auto; display: block`
+
+### Caption
+
+Standalone text caption
+
+#### Configuration
+| Option | Description |
+|------|-------------|
+| description | `required` Caption to be generated |
+
+### Mathjax
+
+Mathmatical formula support can be enabled for your blog posts by adding 
+`use_math: true` to your [front matter](https://jekyllrb.com/docs/step-by-step/03-front-matter/) at the top of the page 
 
 
 ## Useful Resources
