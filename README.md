@@ -82,6 +82,50 @@ e.g. `article/data-archiving-teqniques`
 The jekyll documentation gives a [quick start guide](https://jekyllrb.com/docs/#instructions) to setting up Jekyll. It uses ruby
 to provide local server which you can use when developing your articles.
 
+## Installing Jekyll
+
+This is a quick guide to installing Jekyll on a mac. If you're installing on windows see the [jekyll docs](https://jekyllrb.com/docs/installation/windows/).
+
+You'll need to install:
+- Ruby version 2.5.0 or higher (check this with `ruby -v`).
+- RubyGems (check with `gem -v`)
+- GCC and Make
+
+This is generally easiest with homebrew, see the [jekyll docs](https://jekyllrb.com/docs/installation/macos/) or the [mac install guide](https://mac.install.guide/ruby/index.html) if you're having trouble with this. You can also use rbenv if you need to manage multiple versions of ruby. 
+
+In any case, once ruby is installed and added to your path, you can now install Jekyll and Bundler. This is probably best done locally (there are instructions on the docs to install globally if that's your jam). 
+```
+gem install --user--install bundler jekyll
+```
+And then similarly add it to your path
+```
+# If you're using Zsh
+echo 'export PATH="$HOME/.gem/ruby/X.X.0/bin:$PATH"' >> ~/.zshrc
+
+# If you're using Bash
+echo 'export PATH="$HOME/.gem/ruby/X.X.0/bin:$PATH"' >> ~/.bash_profile
+
+``` 
+where X.X.0 is replaced with your version of ruby. As a quick sanity check, run 
+```
+gem env
+```
+and make sure that `GEM PATHS:` points to your home directory. 
+
+As a final installation step you'll need to download and (locally) install the gems needed to serve the website. Go to the directory where you've checked out the `gh-pages` branch and run:
+
+```
+bundle config set --local path 'vendor/bundle'
+bundle install
+```
+You can of course edit the first line if you'd like to install into a directory other than `vendor/bundle`, or omit it entirely if you'd like to install globally. 
+
+You should now be free to start your local server with the command 
+```
+bundle exec jekyll serve 
+```
+whereby you can now access your local copy of the blog at [http://localhost:4000](http://localhost:4000).
+
 ## Writing an article
 
 - [Article structure](#article-structure)
@@ -177,8 +221,8 @@ reduce repetition when creating common elements. The available includes are belo
 | Name | Description |
 |------|-------------|
 | [Figure](#figure) | Insert a figure into your article with a caption aligned centre underneath | 
-| [Caption](#caption) | Standalone template to add a caption /
-/ [MathJax](#mathjax) / Allow support for Mathmatical formula renderer [Mathjax](https://www.mathjax.org/)
+| [Caption](#caption) | Standalone template to add a caption |
+| [MathJax](#mathjax) | Allow support for Mathmatical formula renderer [Mathjax](https://www.mathjax.org/)|
 
 
 ### Figure
