@@ -37,7 +37,7 @@ layout: base_ceda
                 {%- endif -%}
                 Tags:
                 {%- for tag in tags -%}
-                    <a href="{{ site.url }}/tags#{{tag}}" class="badge badge-primary ml-2">{{ tag }}</a>
+                    <a href="{{ site.url | relative_url }}/tags#{{tag}}" class="badge badge-primary ml-2">{{ tag }}</a>
                 {%- endfor -%}
             </div>
             <div class="card-footer text-muted">
