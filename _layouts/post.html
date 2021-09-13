@@ -12,15 +12,15 @@ layout: base_ceda
 <body>
 
 {% include breadcrumb.html %}
+{% assign author = site.data.authors | where: "name", page.author | first %}
 
 <div class="jumbotron">
     <h1 class="display-4">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
-    <p class="lead">Written by: {{ page.author }} | {{ page.date | date: "%b %-d, %Y"}}</p>
+    <p class="lead"><a href="{{ 'authors' | relative_url }}#{{ author.name }}"><img class="bio-thumbnail thumbnail-circular align-middle" style="height: 1.5em; width: 1.5em" src="{{ author.image }}"> {{ page.author }}</a> | {{ page.date | date: "%b %-d, %Y"}}</p>
 </div>
 
 <main id="content" class="main-content" role="main">
     {{ content }}
-    {% include author.html %}
     <footer class="site-footer">
         {% if site.github.is_project_page %}
         <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a

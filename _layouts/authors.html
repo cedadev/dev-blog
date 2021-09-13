@@ -1,0 +1,24 @@
+---
+layout: base_ceda
+---
+
+<head>
+    <link rel="stylesheet" href="{{ '/assets/css/bio.css' | relative_url }}">
+</head>
+
+<body>
+{% include breadcrumb.html %}
+
+<h1>{{ page.title}}</h1>
+
+
+{% for author in site.data.authors %}
+<div class="bio" style="min-height:90px" id="{{ author.name }}">
+    <img class="bio-thumbnail thumbnail-circular" src="{{ author.image }}">
+    <h3 class="bio-title">{{ author.name }} - <em>{{ author.position }}</em>
+    </h3>
+    <p class="bio-description"><em>{{ author.bio }}</em></p>
+</div>
+<hr class="my-4">
+{% endfor %}
+</body>
