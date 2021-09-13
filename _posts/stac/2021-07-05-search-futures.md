@@ -4,7 +4,7 @@ title:  "Search Futures"
 author: Richard Smith
 date:   2021-07-05 17:00:00 +0100
 categories: search stac indexing
-tags: search indexing stac
+tags: [search, indexing, stac]
 ---
 
 We have been looking around for a flexible, scalable standard which would allow us to expose 

@@ -3,7 +3,7 @@ layout: post
 title:  "What is a user? Removing anomalous behaviour from Anonymous access logs."
 author: Mahir Rahman
 date:   2021-08-20 17:00:00
-tags: CCI, download stats
+tags: [CCI, download stats]
 use_math: true
 ---
 
