@@ -8,7 +8,7 @@ use_math: true
 ---
 
 The Climate Change Initiative (CCI) [project's goal](https://climate.esa.int/en/esa-climate/esa-cci/Objective/) is to provide open, registration-free, 
-access to essential climate variables (ECVs). Dataset usage is an important metric in understanding uptake and usage of the different datasets however,
+access to essential climate variables (ECVs). CEDA runs the open data portal, a suite of services to provide access to the CCI datasets held in the CEDA Archive including download and metadata services. Dataset usage is an important metric in understanding uptake and usage of the different datasets however,
 without requiring users to register, it is difficult to determine distinct users. Recent changes in access patterns have led to spurious user counts when
 thinking 1 IP = 1 USER. This article looks at methods to determine "normal" thresholds to reduce the impact of the different access patterns on our usage statistics.
 
