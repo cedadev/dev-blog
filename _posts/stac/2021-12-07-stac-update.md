@@ -21,7 +21,7 @@ including an indexing framework, API server, clients and vocabulary management. 
 run a technical workshop looking at details of some of the following components. Recordings can be
 found [here]()
 
-# Index
+## Index
 * [Indexing Framework](#indexing-framework)
   * [Asset Generator](#asset-generator)
   * [Item Generator](#item-generator)
@@ -34,7 +34,7 @@ found [here]()
 * [Vocabulary Mangagement](#vocabulary-management)
 
 
-# Indexing Framework
+## Indexing Framework
 
 The first change is a bit of re-branding.
 The indexing framework is lead by the [asset-scanner]().
@@ -47,7 +47,7 @@ Three more packages comprise the individual workflows to
 convert a stream of assets into content for the STAC catalog.
 They have been given the naming convention `*-generator`
 
-## Asset Generator
+### Asset Generator
 
 The [asset generator]() is responsible for extracting
 basic file-level information needed for serving files. 
@@ -64,7 +64,7 @@ extract the datetime for a particular file. Although the STAC specification
 does not support searching these properties, it might
 be beneficial for downstream clients to have this information available.
 
-## Item Generator
+### Item Generator
 
 The [item generator]() forms the glue which brings
 together assets and collections. Item IDs are pulled 
@@ -78,7 +78,7 @@ values are the same, are related.
 
 This approach creates a different problem, discussed later.
 
-## Collection Generator
+### Collection Generator
 
 The [collection generator]() works slightly differently to the other two. Whereas the asset
 and item generators are designed to work on a stream of assets, the collection generator
@@ -95,14 +95,14 @@ All 3 of the generators work on a similar pattern:
     description="Processing workflow for generating content for the STAC API using the CEDA python packages" 
 %} 
 
-## Remaining Challenges
+### Remaining Challenges
 
 It is certain that there are complexities which we have not addressed. Some that we are aware of and working to
 address:
 * Item Aggregation
 * Multiple access methods for a single asset
 
-### Item Aggregation
+#### Item Aggregation
 
 As we are using a stream of assets to create our items, the item metadata is generated as the granularity of assets.
 So far, we have been allowing Elasticsearch to merge the JSON documents. This merge will add new keys and overwrite existing 
@@ -113,7 +113,7 @@ Possible solutions:
 1. Push facet extraction to the asset level object and then aggregate assets to form items and items to form collections.
 2. Cache item objects and perform periodic merges of related objects before storing (could be queue or disk based)
 
-# STAC API
+## STAC API
 
 The second update comes to our API server. We are using [STAC FastAPI]() a community
 project building a STAC server on the FastAPI framework. It comes with sample implementations
@@ -157,11 +157,11 @@ twice, we will try returning the facets in the context in a [similar approach to
 
 This issue is tracked in [issue-182](https://github.com/radiantearth/stac-api-spec/issues/182).
 
-# STAC Clients
+## STAC Clients
 
 Although the API is very powerful we will want a user interface to package the API.
 
-## Web UI
+### Web UI
 
 The simplest user interface (UI) is a web browser allowing us to visually represent the datasets
 and interact through a point-and-click interface.
@@ -187,7 +187,7 @@ It is loosely based on STAC browser and is mostly un-styled to allow it to be us
 
 We have a running, experimental example at [stac.ceda.ac.uk](stac.ceda.ac.uk).
 
-## Python Client
+### Python Client
 
 For programmatic interactions, it is helpful to wrap the REST API in objects with 
 convenience functions and hide some complexity forming the requests.
@@ -201,9 +201,10 @@ We have developed an [early example](https://mybinder.org/v2/gh/cedadev/stac.py-
     description="Example notebook displaying a simple python client" 
 %} 
 
-This client can perform faceted search.
+This client can perform faceted search. Sadly it seems that stac.py is going out of
+development. We will review the alternative options in the new year. 
 
-# Vocabulary Management
+## Vocabulary Management
 
 With diverse data there is the desire to manage vocabularies and deliver a rich experience
 to the user. As a first pass, we want to map project specific terms to more general terms.
