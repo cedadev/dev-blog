@@ -9,7 +9,9 @@ Contents:
 - [Getting started with Jekyll](#getting-started-with-jekyll)
 - [Writing and article](#writing-an-article)
 - [Template includes](#includes)
+- [I'm done, now what?](#im-done-now-what)
 - [Useful resources](#useful-resources)
+
 
 ## Orientation
 
@@ -39,11 +41,11 @@ Can be done in one of two ways:
 
 ### Setup environment on your laptop
 
-1. `git clone https://github.com/cedadev/dev-blog`
-2. `cd dev-blog`
+1. `git clone https://github.com/cedadev/tech-blog`
+2. `cd tech-blog`
 3. `git checkout gh-pages`
 4. `git checkout -b article/<article-bramch-name>` following [branch naming convention](#branch-naming-convention)
-5. Copy the [example article](https://raw.githubusercontent.com/cedadev/dev-blog/gh-pages/_drafts/example_blog_post.md) in the `_drafts` directory
+5. Copy the [example article](https://raw.githubusercontent.com/cedadev/tech-blog/gh-pages/_drafts/example_blog_post.md) in the `_drafts` directory
 6. Place the copy in the `_posts` directory, under your chosen category. If the category doesn't
 exist, you'll have to make it.
 6. [Start writing](#writing-an-article)
@@ -253,6 +255,15 @@ Standalone text caption
 
 Mathmatical formula support can be enabled for your blog posts by adding 
 `use_math: true` to your [front matter](https://jekyllrb.com/docs/step-by-step/03-front-matter/) at the top of the page 
+
+## I'm done, now what?
+
+To get you article public:
+1. Push your branch back to github.
+2. Make a pull request, **comparing against gh-pages** not master.
+3. Get someone to review. Poppy for communications and someone who is familiar with your content for technical stuff
+4. Once they are happy, an owner can merge to `gh-pages` and it becomes live
+![Celebrate](https://media1.tenor.com/images/eb19469ac785b075f0748ff08515690b/tenor.gif?itemid=5146047)
 
 
 ## Useful Resources
