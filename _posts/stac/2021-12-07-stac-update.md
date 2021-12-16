@@ -7,13 +7,16 @@ categories: search stac indexing
 tags: [search, indexing, stac]
 ---
 
-In July, we [posted our progress so far]() and gave some
+In July, we [posted our progress so far]({% post_url _posts/stac/2021-07-05-search-futures.md %}) and gave some
 intentions for the future. This post looks at the progress since
 then and showcases a minimum viable product looking at content generation, a web
 server and client tools.
 
 This article assumes you have some background understanding of what we 
-are doing. If you have not already, the [background](),[requirements]() and [progress]()
+are doing. If you have not already, the 
+[background]({% post_url _posts/stac/2021-07-05-search-futures.md %}#background),
+[requirements]({% post_url _posts/stac/2021-07-05-search-futures.md %}#requirements) and 
+[progress]({% post_url _posts/stac/2021-07-05-search-futures.md %}#progress)
 sections of the previous blog will give the background.
 
 We hope to create a full stack solution for other organisations with similar desires, 
@@ -37,9 +40,9 @@ found [here]()
 ## Indexing Framework
 
 The first change is a bit of re-branding.
-The indexing framework is lead by the [asset-scanner]().
+The indexing framework is lead by the [asset-scanner](https://github.com/cedadev/asset-scanner).
 This provides the base classes and includes the re-useable
-processors, e.g. [regex processor](). The asset scanner also
+processors, e.g. [regex processor](https://cedadev.github.io/asset-scanner/item_generator/processors/processors.html#regex). The asset scanner also
 provides the entry point to the indexing chain
 via the command-line command `asset_scanner`.
 
@@ -49,7 +52,7 @@ They have been given the naming convention `*-generator`
 
 ### Asset Generator
 
-The [asset generator]() is responsible for extracting
+The [asset generator](https://cedadev.github.io/asset-scanner/asset_generator/index.html) is responsible for extracting
 basic file-level information needed for serving files. 
 - Location
 - Size
@@ -66,9 +69,9 @@ be beneficial for downstream clients to have this information available.
 
 ### Item Generator
 
-The [item generator]() forms the glue which brings
+The [item generator](https://cedadev.github.io/asset-scanner/item_generator/index.html) forms the glue which brings
 together assets and collections. Item IDs are pulled 
-from the [item description]() files and given to an item. 
+from the [item description](https://cedadev.github.io/asset-scanner/item_descriptions/item_descriptions.html) files and given to an item. 
 Item IDs are generated, based on the content, and assigned to the relevant assets.
 
 Item ID generation is what brings related assets together. The item generator pulls
@@ -80,7 +83,7 @@ This approach creates a different problem, discussed later.
 
 ### Collection Generator
 
-The [collection generator]() works slightly differently to the other two. Whereas the asset
+The [collection generator](https://github.com/cedadev/collection-generator) works slightly differently to the other two. Whereas the asset
 and item generators are designed to work on a stream of assets, the collection generator
 works to summarise the related items.
 
@@ -115,21 +118,22 @@ Possible solutions:
 
 ## STAC API
 
-The second update comes to our API server. We are using [STAC FastAPI]() a community
+The second update comes to our API server. We are using [STAC FastAPI](https://github.com/stac-utils/stac-fastapi) a community
 project building a STAC server on the FastAPI framework. It comes with sample implementations
-for Postgres and using SQLAlchemy. We have developed an [Elasticsearch backend]().
+for Postgres and using SQLAlchemy. We have developed an [Elasticsearch backend](https://github.com/cedadev/stac-fastapi-elasticsearch).
 
 Our current latest implementation is running at [api.stac.ceda.ac.uk](api.stac.ceda.ac.uk).
 
-Aside from porting the base API to work with Elasticsearch, we have created Elasticsearch
-backends for [pygeofilter]() to enable us to provide the [filter extension](). This gives
+Aside from porting the base API to work with Elasticsearch, we have created an [Elasticsearch
+backend](https://github.com/rsmith013/pygeofilter-elasticsearch) for [pygeofilter](https://github.com/geopython/pygeofilter) 
+to enable us to provide the [filter extension](https://github.com/radiantearth/stac-api-spec/tree/master/fragments/filter). This gives
 rich search capability. It also provides `queryables` which describe the facets available for
 each collection. Through this mechanism, there is no finer reduction of facets.
 
 One of our desires was free-text search capability. This is not defined in the specification.
 Technically, you could probably construct queries using the filter extension which would
 satisfy this need but users are familiar with simple querystring syntax. Elasticsearch
-provides powerful free-text capabilities, so we have added [an extension]() providing simple
+provides powerful free-text capabilities, so we have added [an extension](https://github.com/cedadev/stac-freetext-search) providing simple
 search using the `q` parameter. 
 
 {% include figure.html 
@@ -138,7 +142,7 @@ search using the `q` parameter.
     description="Example queries using the q parameter" 
 %} 
 
-This extension has been listed on the [official stac-api-specification]() page
+This extension has been listed on the [official stac-api-specification](https://github.com/radiantearth/stac-api-spec/blob/master/extensions.md#third-party--vendor-extensions) page
 and is available for all to use.
 
 Faceted search is high on our priority list and we have been trying out solutions.
@@ -147,7 +151,8 @@ global `/queryables` endpoint gives the intersection of all available facets. Th
 difficulty in providing these values for a heterogeneous archive as intersecting more than 2
 collections with different facets will tend to zero.
 
-To solve this, we have defined the [context collections]() extension. This returns the top
+To solve this, we have defined the [context collections](https://github.com/cedadev/stac-context-collections) extension. 
+This returns the top
 10 (elasticsearch default) collections for the current search. This can then be supplied
 to the `/queryables` endpoint using `/queryables?collections=col1,col2` as suggested in 
 [issue-156](https://github.com/opengeospatial/ogcapi-features/issues/576). This works but
