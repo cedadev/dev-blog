@@ -157,7 +157,7 @@ This returns the top
 to the `/queryables` endpoint using `/queryables?collections=col1,col2` as suggested in 
 [issue-156](https://github.com/opengeospatial/ogcapi-features/issues/576). This works but
 you cannot reduce your facet availability below the collection level as the queryables endpoints
-`/queryables` `/collections/<id>/queryables` have no concept search. To avoid making the search
+`/queryables` `/collections/<id>/queryables` have no concept of search. To avoid making the search
 twice, we will try returning the facets in the context in a [similar approach to Google](https://developers.google.com/custom-search/v1/using_rest#search_engine_metadata).
 
 This issue is tracked in [issue-182](https://github.com/radiantearth/stac-api-spec/issues/182).
