@@ -22,7 +22,7 @@ sections of the previous blog will give the background.
 We hope to create a full stack solution for other organisations with similar desires, 
 including an indexing framework, API server, clients and vocabulary management. We have recently
 run a technical workshop looking at details of some of the following components. Recordings can be
-found [here]()
+found [here](https://www.youtube.com/playlist?list=PLhF74Yhqhjqkwc7ESE-QijFDR-gdM3fDW)
 
 ## Index
 * [Indexing Framework](#indexing-framework)
@@ -70,7 +70,7 @@ be beneficial for downstream clients to have this information available.
 ### Item Generator
 
 The [item generator](https://cedadev.github.io/asset-scanner/item_generator/index.html) forms the glue which brings
-together assets and collections. Item IDs are pulled 
+together assets and collections. Collection IDs are pulled 
 from the [item description](https://cedadev.github.io/asset-scanner/item_descriptions/item_descriptions.html) files and given to an item. 
 Item IDs are generated, based on the content, and assigned to the relevant assets.
 
