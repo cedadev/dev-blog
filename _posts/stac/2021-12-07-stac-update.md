@@ -7,16 +7,16 @@ categories: search stac indexing
 tags: [search, indexing, stac]
 ---
 
-In July, we [posted our progress so far]({% post_url _posts/stac/2021-07-05-search-futures.md %}) and gave some
+In July, we [posted our progress so far]({% post_url _posts/stac/2021-07-05-search-futures %}) and gave some
 intentions for the future. This post looks at the progress since
 then and showcases a minimum viable product looking at content generation, a web
 server and client tools.
 
 This article assumes you have some background understanding of what we 
 are doing. If you have not already, the 
-[background]({% post_url _posts/stac/2021-07-05-search-futures.md %}#background),
-[requirements]({% post_url _posts/stac/2021-07-05-search-futures.md %}#requirements) and 
-[progress]({% post_url _posts/stac/2021-07-05-search-futures.md %}#progress)
+[background]({% post_url _posts/stac/2021-07-05-search-futures %}#background),
+[requirements]({% post_url _posts/stac/2021-07-05-search-futures %}#requirements) and 
+[progress]({% post_url _posts/stac/2021-07-05-search-futures %}#progress)
 sections of the previous blog will give the background.
 
 We hope to create a full stack solution for other organisations with similar desires, 
