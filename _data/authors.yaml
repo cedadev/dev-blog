@@ -17,3 +17,9 @@
   bio: |
     Neil joined CEDA in 2016 after working on the climateprediction.net and weather@home projects at the University of Oxford for 12 years, during which he gained a DPhil. in Atmospheric Physics.
     At CEDA, Neil is using his experience of large datasets to develop solutions to storing and accessing the very large volume of data held on JASMIN at CEDA, both in user's group workspaces and in the archive. These solutions involve using new storage technology, such as object stores and scale-out filesystems, and novel methods to exploit existing technology such as tape and parallel file systems.
+- name: Jack Leland
+  position: Software Engineer
+  image: https://www.ceda.ac.uk/media/uploads/persons/staff_images/.thumbnails/jack-leland.jpg/jack-leland-90x90.jpg
+  bio: |
+    Jack joined CEDA as a software developer in 2021 after completing a PhD in Plasma Physics at the University of Liverpool. 
+    At CEDA, Jack is working on overhauling the joint-storage migration application (JDMA) to make using tape- and object-storage a more seamless process for JASMIN users.
