@@ -23,3 +23,9 @@
   bio: |
     Jack joined CEDA as a software developer in 2021 after completing a PhD in Plasma Physics at the University of Liverpool. 
     At CEDA, Jack is working on overhauling the joint-storage migration application (JDMA) to make using tape- and object-storage a more seamless process for JASMIN users.
+- name: Daniel Westwood
+  position: Software Engineer
+  image: 
+  bio: | 
+    Daniel joined CEDA as a (Graduate) Software Engineer in September 2022 following graduation from the University of York with a Masters in Physics with Astrophysics. 
+    His role within CEDA is primarily to develop and maintain applications for data retrieval and visualisation by users; web services to access datasets within the CEDA archive and applications to graphically visualise geospatial data.
