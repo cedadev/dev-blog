@@ -13,26 +13,24 @@ of what you are going to talk about.
 
 # Index
 
-* [Background](#background)
-* [Process of migration](#process-of-migration)
-* [The CEDA Document Repository](#the-ceda-document-repository)
-* [Overview of the migration process](#overview-of-the-migration-process) 
-* [Getting content from CEDA Docs using Python](#getting-content-from-ceda-docs-using-python)
-* [Mapping metadata](#mapping-metadata)
-* [Uploading to Zenodo](#uploading-to-zenodo)
-* [Handling versioning](#handling-versioning)
-* [Major problems](#major-problems)
-* [Measuring success](#measuring-success)
-* [Post migration work](#post-migration-work)
-* [References](#references)
+- [Background](#background)
+  - [The CEDA Document Repository](#the-ceda-document-repository)
+- [Process of migration](#process-of-migration)
+  - [Overview of the migration process](#overview-of-the-migration-process) 
+  - [Getting content from CEDA Docs using Python](#getting-content-from-ceda-docs-using-python)
+  - [Mapping metadata](#mapping-metadata)
+  - [Uploading to Zenodo](#uploading-to-zenodo)
+  - [Handling versioning](#handling-versioning)
+  - [Major problems](#major-problems)
+- [Post migration work](#post-migration-work)
+  - [Measuring success](#measuring-success)
+- [References](#references)
 
 # Background
 
 At the Centre for Environmental Data Analysis (CEDA) a wide range of services are provided to aid the research community to find, access, process and analyse environmental data. Ensuring these remain secure, reliable and robust to support CEDA’s growing user community entails dedicated staff effort and resources, alongside periodic reviews to identify vulnerabilities and continued relevance of services. These last two aspects of service maintenance may lead to the decision to retire services, a process that requires careful consideration to ensure minimal impact to users and overall delivery of services. 
 
 One such service CEDA has operated over many years is a document repository, an instance of an ‘EPrints’ repository as a store of ‘grey literature’ items relevant to the work and services of CEDA and its user community. Over the past few months this is one service that has completed its lifecycle, a process which highlights some salient points around the transition to the end of service delivery. More specifically, it may aid other operators of similar ‘EPrints’ based services also wishing to follow similar transitions. 
-
-# Process of migration
 
 ## The CEDA Document Repository
 CEDA originally set up the CEDA Document Repository to act as a ‘grey literature’ store to support CEDA’s community, to aid access to items that relate to, and aid the use of, data in the CEDA archives. Such content would be wide ranging from research aircraft flight logs and instrument calibration details through to minutes from meetings, poster presentations and annual reports.  Launched on 30th October 2008 as one of the outputs of the “Overlay Journal Infrastructure for Meteorological Sciences (OJIMS) project” (Callaghan et al. 2009), it was initially funded by the project for its first year with “the principal expenditure devoted to moderating the deposit of new items into the repository.”  and as “the costs of running the repository within the BADC [now CEDA] in the long term were not found to be prohibitive. Hence the repository will be maintained for the foreseeable future now that the OJIMS Project has ended.” 
@@ -44,6 +42,10 @@ One option examined was the Zenodo repository service which is operated by CERN 
 In terms of overheads Zenodo would present very similar levels of effort with regards to content moderation for items submitted to be included within a CEDA ‘community’ within Zenodo compared to editorial responsibilities for the CEDA Eprints service. However, CEDA would not have to maintain the underlying service itself, including user management. 
 
 Consequentially, in Summer 2022 it was decided to begin the process of porting content from the CEDA operated EPrints document repository to a new CEDA Document Repository Zenodo Community. This main effort to enact this transfer centred around mapping metadata fields from the EPrints to Zenodo and addressing various content issues that were identified along the way. These aspects are explored in the following sections. 
+
+
+# Process of migration
+
 
 ## Overview of the migration process 
 To ensure a smooth migration of content to allow the closure of the CEDA EPrints service three significant parts needed to be concluded: 
@@ -118,12 +120,7 @@ Within the EPrints document repository service there had been a number of fields
 
 The work required to review the actual content and either manually adjusting the source content (to correct for identified issues/adjust incorrect selections) and preparing the mappings used within the code was the most time-consuming stage in the migration process. 
 
-## Measuring success 
-The goal of this exercise was for as full a migration as possible to enable the closure of the CEDA Document Repository EPrints service. Success of this operation was measured by tracking the process a at all stages through the migration, capturing any errors that were encountered and following up with any adjustments to the processes to address these issues. 
-
-With the exception of the FAAM website record highlighted above needing its own migration run, all remaining 1249 items were successfully migrated over to Zenodo with all metadata content. The additional run to also migrate the FAAM website record was also successfully completed.  
-
-## Post migration work 
+# Post migration work
 
 Following successful migration of content from the CEDA Document Repository service to the CEDA community on Zenodo a number of follow-up actions were undertaken to further aid usability and maintainability of items. 
 
@@ -139,7 +136,13 @@ New items can now be uploaded to Zenodo and submitted for acceptance within the 
 
 Finally, the EPrints service and server were retired fully, marking the end of the successful migration of this service.  
 
-## References 
+## Measuring success 
+The goal of this exercise was for as full a migration as possible to enable the closure of the CEDA Document Repository EPrints service. Success of this operation was measured by tracking the process a at all stages through the migration, capturing any errors that were encountered and following up with any adjustments to the processes to address these issues. 
+
+With the exception of the FAAM website record highlighted above needing its own migration run, all remaining 1249 items were successfully migrated over to Zenodo with all metadata content. The additional run to also migrate the FAAM website record was also successfully completed.  
+
+# References 
 
 Sarah Callaghan, Sam Pepler, Fiona Hewer, Paul Hardaker, Alan Gadian (2009). How to publish data using overlay journals: the OJIMS project. Ariadne, Issue 61. http://www.ariadne.ac.uk/issue61/callaghan-et-al/ 
+
 Adrian Dębski, & Graham Parton. (2023). cedadev/cedadocs_migrate: v1.0.0 (Initial). Zenodo. https://doi.org/10.5281/zenodo.7611795 
