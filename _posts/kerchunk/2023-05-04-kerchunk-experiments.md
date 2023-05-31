@@ -6,6 +6,8 @@ date:   2023-05-04 15:00:00
 tags: [Kerchunk, fsspec]
 ---
 
+TL;DR Kerchunk stores netcdf chunk information to be used to create virtual xarray datasets. If there are many chunks, there will be many references in the kerchunk file. The number of references can be reduced by formulating a description of the chunks rather than just listing each one, the existing formula syntax is limited so a new custom syntax is explored here
+
 Kerchunk is a library of python tools providing a single uniform method of representing chunked compressed data formats for more efficient cloud access without having to translate file formats. A significant amount of historic data exists in formats not ideal for cloud access (NetCDF/HDF5, GRIB etc.). Kerchunk was created as a way to avoid the lengthy process of converting files to zarr format for cloud optimisation, instead creating json files containing chunking information which can be used to build virtual datasets from multiple files using only certain chunks.
 
 The experiments described here explored ways of reducing and optimising the file sizes and opening times of kerchunk files for a better user experience. Existing attempts to produce kerchunk files for large datasets have been met with the issue of an ever-growing kerchunk file size, thus ways to optimise storage are being explored. 
@@ -139,3 +141,6 @@ Beyond the cases of using NetCDF files, the custom generators may be unable to h
 
 # Summary
 The custom generator experiments have proven very successful in extending the capabilities of the existing generator syntax to represent more complicated datasets in an efficient manner, and the kerchunk file compilation times and sizes are far improved over the standard original methods. What is disappointing however is that the virtual dataset construction, which would be the user experience in most cases, is far slower to process than even the original files. It is clear that at the moment the custom generator methods could not be incorporated for all kerchunk files as it would significantly impact users' experience with using kerchunk for cloud purposes, and further developments are needed to explore how to make generator unpacking more efficient.
+
+# Getting in touch
+If you would like to discuss this topic or other kerchunk questions, please contact me by [email](daniel.westwood@stfc.ac.uk).
