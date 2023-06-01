@@ -26,7 +26,7 @@ The experiments described here explored ways of reducing and optimising the file
 
 # Kerchunk Background
 
-The purpose of kerchunk is to provide a method of reading data from traditional file systems like Quobyte, using cloud-based services. Kerchunk provides a unified way to represent chunked data formats of various types and file formats, allowing more efficient access from the cloud. Cloud-optimised file formats like Zarr do exist, but it would be time consuming and computationally intensive to convert all historic data of different formats to Zarr. With kerchunk, the existing files are not altered, instead a representation of the chunk structure of the files is stored in the cloud as a kerchunk file (K file) and can be used in conjuction with other python libraries to build a virtual dataset for analysis.
+The purpose of kerchunk is to provide a method of reading data from traditional file systems like Quobyte, using cloud-based services. Kerchunk provides a unified way to represent chunked data formats of various types and file formats, allowing more efficient access from the cloud. Cloud-optimised file formats like Zarr do exist, but it would be time consuming and computationally intensive to convert all historic data of different formats to Zarr. With kerchunk, the existing files are not altered, instead a representation of the chunk structure of the files is stored in the cloud as a kerchunk file (__K file__) and can be used in conjuction with other python libraries to build a virtual dataset for analysis.
 
 {% include figure.html
     image_url="assets/img/posts/2023-05-04-kerchunk-experiments/workflow.png"
@@ -84,15 +84,15 @@ As has been alluded to, the existing syntax for generators is simply insufficien
 
 The custom generators replace all chunk references in the kerchunk file, which could be millions of entries into the `refs` dictionary. Extracting relevant chunk information is therefore done most efficiently by a single pass of all chunk references, resulting in an O(n) complexity in big O notation. This does require assembling multiple variables to cache the data, which is memory-intensive, but this is far better than having to complete multiple passes of millions of references. The custom generator script takes the existing set of refs and instead represents them in a condensed format using the attributes below:
 
-- File list: The chunk offsets and lengths are collected in this pass, as well as the index of the last chunk that occurs in each file. This means that for identifying which chunk belongs to which file, the kerchunk file only stores the name of each file once and the index of the last chunk.
-- Unique chunks: Collect all chunk sizes, determine the modal chunk size and the array of chunks that differ from that size. The custom generator syntax is to store the `lengths` and `ids` arrays as two sub-items under `unique` key in the resulting dictionary.
-- Skipped chunks: The generator stores the total number of chunks there should be when unpacking, but some chunks are placed as keys in the `skipchunks` dict. The value associated with the chunk key is an array of 1s and 0s representing for which variables that chunk is missing (land/sea flags mean all 0s if applied to all variables).
-- Chunk gaps: Determined using the subtraction of two numpy arrays which determines all chunks for where a gap exists before the next chunk in the series. Stored in the same format as __Unique chunks__ with `lengths` of gaps and `ids` of chunks with the preceeding gap. `lengths` of gaps can be negative here, which is a feature to allow for out-of-order chunking and end-of-file changes.
-- Variables: List of names of all the variables.
-- Varwise: Boolean flag for chunk layout (varwise for each variable chunk or chunkwise for all chunks of one variable in order)
-- Dims: The sizes of dimensions that are chunked, the first dimension is always time or per-file chunking, followed by dimensions of any internal netcdf chunking.
-- Dimensions: Specifies iterators for unpacking the generators (this syntax has been preserved from the original generator syntax.)
-- Gfactor: This value ranges from 0 to 1 and is calculated by subtracting from 1, the total number of non-uniform (unique or skipped) chunks against the total number of chunks. The ideal case would be zero non-uniform chunks and a gfactor of 1, while the worst case is all chunks being unique, so the gfactor is zero. These cases plus the more typical case of a 0-1 gfactor are shown in figure 3. 
+- __File list__: The chunk offsets and lengths are collected in this pass, as well as the index of the last chunk that occurs in each file. This means that for identifying which chunk belongs to which file, the kerchunk file only stores the name of each file once and the index of the last chunk.
+- __Unique chunks__: Collect all chunk sizes, determine the modal chunk size and the array of chunks that differ from that size. The custom generator syntax is to store the `lengths` and `ids` arrays as two sub-items under `unique` key in the resulting dictionary.
+- __Skipped chunks__: The generator stores the total number of chunks there should be when unpacking, but some chunks are placed as keys in the `skipchunks` dict. The value associated with the chunk key is an array of 1s and 0s representing for which variables that chunk is missing (land/sea flags mean all 0s if applied to all variables).
+- __Chunk gaps__: Determined using the subtraction of two numpy arrays which determines all chunks for where a gap exists before the next chunk in the series. Stored in the same format as __Unique chunks__ with `lengths` of gaps and `ids` of chunks with the preceeding gap. `lengths` of gaps can be negative here, which is a feature to allow for out-of-order chunking and end-of-file changes.
+- __Variables__: List of names of all the variables.
+- __Varwise__: Boolean flag for chunk layout (varwise for each variable chunk or chunkwise for all chunks of one variable in order)
+- __Dims__: The sizes of dimensions that are chunked, the first dimension is always time or per-file chunking, followed by dimensions of any internal netcdf chunking.
+- __Dimensions__: Specifies iterators for unpacking the generators (this syntax has been preserved from the original generator syntax.)
+- __Gfactor__: This value ranges from 0 to 1 and is calculated by subtracting from 1, the total number of non-uniform (unique or skipped) chunks against the total number of chunks. The ideal case would be zero non-uniform chunks and a gfactor of 1, while the worst case is all chunks being unique, so the gfactor is zero. These cases plus the more typical case of a 0-1 gfactor are shown in figure 3. 
 
 These attributes are used to rebuild the complete chunk list upon usage of the kerchunk file.
 
@@ -132,9 +132,9 @@ Unpacking the generator has proven considerably more difficult to optimise as ea
 
 # Next Steps
 While there has been considerable extension to the existing generator capabilities that now mean previously unrepresentable datasets can be represented, there are still some limitations to this process.
-- Requirements of the NetCDF files being representing; formatting and inclusion of specific dimensions (i.e __time__ and __lat/lon__), possible dependency on regular lat/lon grids.
-- Reference files; The custom generator code selects the first file to act as a reference for chunk structure but this only works if all files being assessed follow that structure.
-- Other datasets; The custom generator code has not been tested with other file formats like GRIB, GeoTIFF etc. Adjustments may need to be added for different file structures, especially with manipulating and removing repeated dimensions.
+- __Requirements__ of the NetCDF files being representing; formatting and inclusion of specific dimensions (i.e __time__ and __lat/lon__), possible dependency on regular lat/lon grids.
+- __Reference files__; The custom generator code selects the first file to act as a reference for chunk structure but this only works if all files being assessed follow that structure.
+- __Other data formats__; The custom generator code has not been tested with other file formats like GRIB, GeoTIFF etc. Adjustments may need to be added for different file structures, especially with manipulating and removing repeated dimensions.
 
 # Summary
 The custom generator experiments have proven very successful in extending the capabilities of the existing generator syntax to represent more complicated datasets in an efficient manner, and the kerchunk file compilation times and sizes are far improved over the standard original methods. What is disappointing however is that the virtual dataset construction, which would be the user experience in most cases, is far slower to process than even the original files. It is clear that at the moment the custom generator methods could not be incorporated for all kerchunk files as it would significantly impact users' experience with using kerchunk for cloud purposes, and further developments are needed to explore how to make generator unpacking more efficient.
