@@ -6,10 +6,7 @@ date:   2023-05-25 13:00:00
 tags: [migration, CEDA Docs, Zenodo]
 ---
 
-The first paragraph of the blog post is really important. It is shown on the home page
-alongside the title and should give browsing users enough information about the article
-to know whether they want to read it or not. It should be short and give an over view 
-of what you are going to talk about.
+For many years CEDA has operated the CEDA Document Repository to aid capturing useful supporting material to aid long-term usabulity and understandability of data in the CEDA archives. This service was operated using a local deployment of the EPrints service with related overheads of running and maintaining such a service. However, during the course of the repository other generic services have become available and thus in 2022 CEDA undertook to migrate over 1300 items from the in-house EPrints service to a CEDA Document Repository Community within CERN’s “Zenodo” service to enable greater usability and sustainability of a grey literature service supporting CEDA’s community.
 
 # Index
 
