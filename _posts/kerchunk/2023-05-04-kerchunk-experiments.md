@@ -14,15 +14,17 @@ The experiments described here explored ways of reducing and optimising the file
 
 # Index
 
+- [Index](#index)
 - [Kerchunk Background](#kerchunk-background)
-- [Generators](#the-middle-bit)
-  - [Limitations of Standard Generators](#standard-limitations)
+- [Generators](#generators)
+  - [Limitations of Standard Generators](#limitations-of-standard-generators)
   - [Custom Generator Syntax](#custom-generator-syntax)
 - [Performance](#performance)
   - [File Sizes](#file-sizes)
   - [Packing and Unpacking](#packing-and-unpacking)
 - [Next Steps](#next-steps)
 - [Summary](#summary)
+- [Getting in touch](#getting-in-touch)
 
 # Kerchunk Background
 
@@ -114,7 +116,7 @@ Figure 3 shows a pie chart of the distributions of chunks within some test case 
     description="Figure 4: Linear relation of Kerchunk file (K file) increase with number of Netcdf (N files) for the standard and custom generated cases."
 %}
 
-Figure 4 shows the linear increase in file sizes for the kerchunk files (K files) wien an increasing number of netcdf files (N files) are considered. The non-compressed metadata contributes around 30 KB file size to each file, with the original files increasing by 1 MB per added N file, and the generated files increasing by 0.1 MB.
+Figure 4 shows the linear increase in file sizes for the kerchunk files (K files) when an increasing number of netcdf files (N files) are considered. The non-compressed metadata contributes around 30 kB file size to each file, with the original files increasing by 1 MB per added N file, and the generated files increasing by 0.1 MB.
 
 {% include figure.html
     image_url="assets/img/posts/2023-05-04-kerchunk-experiments/reductions.png"
@@ -126,13 +128,13 @@ The observed size reduction across the 50 files considered here remains between 
 ## Packing and Unpacking
 Part of the issue with current kerchunk files is that for large file sets (6000+ in the case of ESACCI LST), the kerchunk files take a long time to construct in the first instance but also reading the kerchunk files to construct virtual datasets takes a long time as well. The latter of these is more impactful as the virtual dataset construction occurs every time a new analysis is executed whereas the kerchunk file is only constructed once.
 
-The custom packing adds some amount of processing time to create the generators and determine chunk structure disruptions. This process has been partially optimised by reducing the number of passes of the chunk references to a single pass and using numpy to assess the chunk sets for standard sizes and disruptions. Tests conducted using the aforementioned ESACCI LST data (gfactor: 0.4) indicated that the packing time scales with number of files considers and adds less than 10% to the construction time of the kerchunk files.
+The custom packing adds some amount of processing time to create the generators and determine chunk structure disruptions. This process has been partially optimised by reducing the number of passes of the chunk references to a single pass and using numpy to assess the chunk sets for standard sizes and disruptions. Tests conducted using the aforementioned ESACCI LST data (gfactor: 0.4) indicated that the packing time scales with number of files considered and adds less than 10% to the construction time of the kerchunk files.
 
 Unpacking the generator has proven considerably more difficult to optimise as each chunk is heavily dependent on the sizes and disruptions of chunks before it. The current method is a simple iteration specified in the generator `dimensions` attribute, which includes a memory offset counter and pseudo-pointers for the unique and gap arrays, incrementing for each gap as the iteration counter passes each chunk id. This method has proven much slower than anticipated, as the read time for a kerchunk file representing 1000 NetCDF files is doubled from 20 to 40 seconds. The read time increases further when attempting minimal unpacking to 1 minute 30 seconds, as the iteration is still required over all chunks - just that they are not all recorded. Clearly there is room for optimisation and improvement of current methods, possibly including numpy array analysis for efficiency or simply reorganising the checks within the iteration loop.
 
 # Next Steps
 While there has been considerable extension to the existing generator capabilities that now mean previously unrepresentable datasets can be represented, there are still some limitations to this process.
-- __Requirements__ of the NetCDF files being representing; formatting and inclusion of specific dimensions (i.e __time__ and __lat/lon__), possible dependency on regular lat/lon grids.
+- __Requirements__ of the NetCDF files being represented; formatting and inclusion of specific dimensions (i.e __time__ and __lat/lon__), possible dependency on regular lat/lon grids.
 - __Reference files__; The custom generator code selects the first file to act as a reference for chunk structure but this only works if all files being assessed follow that structure.
 - __Other data formats__; The custom generator code has not been tested with other file formats like GRIB, GeoTIFF etc. Adjustments may need to be added for different file structures, especially with manipulating and removing repeated dimensions.
 
