@@ -20,7 +20,7 @@ The experiments described here explored ways of reducing and optimising the file
   - [Limitations of Standard Generators](#limitations-of-standard-generators)
   - [Custom Generator Syntax](#custom-generator-syntax)
 - [Performance](#performance)
-  - [File Sizes](#file-sizes)
+  - [file Sizes](#file-sizes)
   - [Packing and Unpacking](#packing-and-unpacking)
 - [Next Steps](#next-steps)
 - [Summary](#summary)
@@ -28,16 +28,16 @@ The experiments described here explored ways of reducing and optimising the file
 
 # Kerchunk Background
 
-The purpose of kerchunk is to provide a method of reading data from traditional file systems like Quobyte, using cloud-based services. Kerchunk provides a unified way to represent chunked data formats of various types and file formats, allowing more efficient access from the cloud. Cloud-optimised file formats like Zarr do exist, but it would be time consuming and computationally intensive to convert all historic data of different formats to Zarr. With kerchunk, the existing files are not altered, instead a representation of the chunk structure of the files is stored in the cloud as a kerchunk file (__K file__) and can be used in conjuction with other python libraries to build a virtual dataset for analysis.
+The purpose of kerchunk is to provide a method of reading data from traditional file systems like Quobyte, using cloud-based services. Kerchunk provides a unified way to represent chunked data formats of various types and file formats, allowing more efficient access from the cloud. Cloud-optimised file formats like Zarr do exist, but it would be time consuming and computationally intensive to convert all historic data of different formats to Zarr. With kerchunk, the existing files are not altered, instead a representation of the chunk structure of the files is stored in the cloud as a kerchunk file and can be used in conjuction with other python libraries to build a virtual dataset for analysis.
 
 {% include figure.html
     image_url="assets/img/posts/2023-05-04-kerchunk-experiments/workflow.png"
     description="Figure 1: Typical file access and where kerchunk fits into the workflow."
 %}
 
-Figure 1 shows the kerchunk workflow which replaces the Zarr/Object Store requirement for cloud optimisation. For files stored in traditional formats, kerchunk uses an fsspec ReferenceFileSystem object to build a picture of the chunk structure within the files, and a Kerchunk (json) file  stores minimal chunk information and metadata. It is the kerchunk files which are then used to construct virtual datasets at the application layer, typically using Xarray and Dask for lazy evaluation.
+Figure 1 shows the kerchunk workflow which replaces the Zarr/Object Store requirement for cloud optimisation. For files stored in traditional formats, kerchunk uses an fsspec ReferencefileSystem object to build a picture of the chunk structure within the files, and a Kerchunk (json) file  stores minimal chunk information and metadata. It is the kerchunk files which are then used to construct virtual datasets at the application layer, typically using Xarray and Dask for lazy evaluation.
 
-This article details the experiments undertaken to explore ways of further compressing kerchunk files (minimised/generator-based) using __generators__. This workflow addition consists of extra steps for packing and unpacking generators, resulting in smaller kerchunk files stored in the cloud but may result in longer processing times for kerchunk files. It may also be possible to use a technique called __minimal unpacking__ which involves unpacking only the required chunks, which would ideally decrease analysis times for the virtual datasets, but may need further optimisation and considerations of various approaches.
+This article details the experiments undertaken to explore ways of further compressing kerchunk files (minimised/generator-based) using __generators__. This workflow addition consists of extra steps for packing and unpacking generators in the form of overriding methods of the Kerchunk construction classes, resulting in smaller kerchunk files stored in the cloud but may result in longer processing times for kerchunk files. It may also be possible to use a technique called __minimal unpacking__ which involves unpacking only the required chunks, which would ideally decrease analysis times for the virtual datasets, but may need further optimisation and considerations of various approaches.
 
 # Generators
 
@@ -101,7 +101,7 @@ These attributes are used to rebuild the complete chunk list upon usage of the k
 # Performance
 The kerchunk experiments aim to explore and optimise two main issues with the standard kerchunk files; the size of the kerchunk files and the time taken to write to and read from them. Some kerchunk files can balloon to MB or GB in size depending on the NetCDF internal chunking, which also impacts the read and write times for these files. Ideally both the size of kerchunk files and the time taken to construct and use those files can be reduced significantly using generators. So far with these experiments, the file sizes have been successfully reduced at the cost of a small increase in read times, as there are now added generator packing and unpacking processes that only add to the read/write times. Future improvements would be to consider the library dependencies of kerchunk, how the virtual datasets are assembled from the chunk information and whether those elements can be optimised as well.
 
-## File Sizes
+## file Sizes
 
 {% include figure.html
     image_url="assets/img/posts/2023-05-04-kerchunk-experiments/chunk_distributions.png"
@@ -113,17 +113,18 @@ Figure 3 shows a pie chart of the distributions of chunks within some test case 
 
 {% include figure.html
     image_url="assets/img/posts/2023-05-04-kerchunk-experiments/file_sizes.png"
-    description="Figure 4: Linear relation of Kerchunk file (K file) increase with number of Netcdf (N files) for the standard and custom generated cases."
+    description="Figure 4: Linear relation of Kerchunk file increase with number of Netcdf (NetCDF files) for the standard and custom generated cases."
 %}
 
-Figure 4 shows the linear increase in file sizes for the kerchunk files (K files) when an increasing number of netcdf files (N files) are considered. The non-compressed metadata contributes around 30 kB file size to each file, with the original files increasing by 1 MB per added N file, and the generated files increasing by 0.1 MB.
+Figure 4 shows the linear increase in file sizes for the kerchunk files with an increasing number of netcdf files (NetCDF files) are considered. The non-compressed metadata contributes around 30 KB file size to each file, with the original files increasing by 1 MB per added NetCDF file, and the generated files increasing by 0.1 MB.
+
 
 {% include figure.html
     image_url="assets/img/posts/2023-05-04-kerchunk-experiments/reductions.png"
-    description="Figure 5: Proportional reduction in size between standard (original) K files and custom generated variants."
+    description="Figure 5: Proportional reduction in size between standard (original) Kerchunk files and custom generated variants."
 %}
 
-The observed size reduction across the 50 files considered here remains between 9.3 and 8.3, meaning that for the largest K files for the ESACCI LST data at around 6000 MB, the generated K file should be around 7-800 MB. This reduction depends on the gfactor of the data, but also the increase per N file. The BICEP N files have no internal spatial chunking so the increase per N file is very small, so the size reduction of the K files is only around 0.8 times, despite the BICEP files having a very high gfactor.
+The observed size reduction across the 50 files considered here remains just below 1 order of magnitude, meaning that for the largest Kerchunk files for the ESACCI LST data at around 6000 MB, the generated Kerchunk file should be around 9 times smaller. This reduction depends on the gfactor of the data, but also the increase per NetCDF file. The BICEP NetCDF files have no internal spatial chunking so the increase per NetCDF file is very small and the size reduction of the Kerchunk files is only around 0.8 times, despite the BICEP files having a very high gfactor.
 
 ## Packing and Unpacking
 Part of the issue with current kerchunk files is that for large file sets (6000+ in the case of ESACCI LST), the kerchunk files take a long time to construct in the first instance but also reading the kerchunk files to construct virtual datasets takes a long time as well. The latter of these is more impactful as the virtual dataset construction occurs every time a new analysis is executed whereas the kerchunk file is only constructed once.
